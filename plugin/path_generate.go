@@ -42,15 +42,27 @@ func (b *backend) pathGenerate(ctx context.Context, req *logical.Request, d *fra
 		// This works, but looks hacky
 		"services[]": []string{"Xj6ZldKCnW2gmTix97F1U", "23MQEr22Ux4U7rW4IRZUXz"}, // Sandbox services
 	}
-
-	token, err := CreateFastlyToken(config.SharedSecret, formData)
+	totp, err := generateTOTPCode(config.SharedSecret)
 	if err != nil {
-		return nil, err
+		return &logical.Response{
+			Data: map[string]interface{}{
+				"error": "Could not generate TOTP token",
+			},
+		}, nil
+	}
+
+	token, err := CreateFastlyToken(totp, formData)
+	if err != nil {
+		return &logical.Response{
+			Data: map[string]interface{}{
+				"error": err.Error(),
+			},
+		}, nil
 	}
 
 	return &logical.Response{
 		Data: map[string]interface{}{
-			"token": token,
+			"token": token.AccessToken,
 		},
 	}, nil
 }
