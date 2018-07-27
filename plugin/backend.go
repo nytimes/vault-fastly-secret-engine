@@ -73,6 +73,11 @@ Configure fastly secret engine.
 						Description: "Fastly password.",
 						Default:     "",
 					},
+					"sharedSecret": &framework.FieldSchema{
+						Type:        framework.TypeString,
+						Description: "Fastly sharedSecret.",
+						Default:     "",
+					},
 				},
 				Callbacks: map[logical.Operation]framework.OperationFunc{
 					logical.ReadOperation:   b.pathConfigRead,
