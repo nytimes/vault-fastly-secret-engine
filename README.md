@@ -12,6 +12,7 @@ docker run --cap-add=IPC_LOCK -e 'VAULT_DEV_ROOT_TOKEN_ID=myroot' -e 'VAULT_DEV_
 In a second terminal window...
 
 ```bash
+export VAULT_ADDR='http://0.0.0.0:1234
 vault login myroot
 SHASUM=$(shasum -a 256 vault-fastly-secret-engine | cut -d " " -f1)
 vault write sys/plugins/catalog/vault-fastly-secret-engine   sha_256="$SHASUM"   command="vault-fastly-secret-engine"
@@ -28,4 +29,9 @@ You can view the config with:
 
 ```bash
 vault read fastly/config
+```
+
+You can generate a token with:
+```bash
+vault write fastly/generate scope="" service_id=""
 ```
