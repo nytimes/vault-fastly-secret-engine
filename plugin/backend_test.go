@@ -81,23 +81,4 @@ func TestBackend(t *testing.T) {
 			t.Errorf("expected %q to be %q", v, exp)
 		}
 	})
-	// t.Run("passphrase", func(t *testing.T) {
-	// 	t.Parallel()
-
-	// 	b, storage := testBackend(t)
-	// 	resp, err := b.HandleRequest(context.Background(), &logical.Request{
-	// 		Storage:   storage,
-	// 		Operation: logical.UpdateOperation,
-	// 		Path:      "passphrase",
-	// 	})
-	// 	if err != nil {
-	// 		t.Fatal(err)
-	// 	}
-
-	// 	v := resp.Data["value"].(string)
-	// 	parts := strings.Split(v, "-")
-	// 	if len(parts) != 6 {
-	// 		t.Errorf("expected %q to be 6 parts", v)
-	// 	}
-	// })
 }
