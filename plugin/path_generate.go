@@ -42,6 +42,7 @@ func (b *backend) pathGenerate(ctx context.Context, req *logical.Request, data *
 		"name":       []string{"vault-fastly-secret-engine"},
 		"services[]": serviceIDs,
 	}
+
 	totp, err := generateTOTPCode(config.SharedSecret)
 	if err != nil {
 		return &logical.Response{
