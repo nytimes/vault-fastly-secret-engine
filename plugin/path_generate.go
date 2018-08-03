@@ -33,17 +33,14 @@ func (b *backend) pathGenerate(ctx context.Context, req *logical.Request, data *
 	config, err := b.config(ctx, req.Storage)
 
 	scope := data.Get("scope").(string)
-	serviceID := data.Get("service_id").(string)
+	serviceIDs := strings.Split(data.Get("service_id").(string), ",")
 
 	formData := map[string][]string{
-		"username": []string{config.Username},
-		"password": []string{config.Password},
-		"scope":    []string{scope},
-		"name":     []string{"vault-fastly-secret-engine"},
-
-		// The Go url package doesn't add [] automatically when encoding arrays
-		// This works, but looks hacky
-		"services[]": []string{serviceID},
+		"username":   []string{config.Username},
+		"password":   []string{config.Password},
+		"scope":      []string{scope},
+		"name":       []string{"vault-fastly-secret-engine"},
+		"services[]": serviceIDs,
 	}
 	totp, err := generateTOTPCode(config.SharedSecret)
 	if err != nil {
