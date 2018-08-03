@@ -28,20 +28,21 @@ type FastlyToken struct {
 	Services    []string  `json:"services"`
 }
 
-func (b *backend) pathGenerate(ctx context.Context, req *logical.Request, d *framework.FieldData) (*logical.Response, error) {
+func (b *backend) pathGenerate(ctx context.Context, req *logical.Request, data *framework.FieldData) (*logical.Response, error) {
 
 	config, err := b.config(ctx, req.Storage)
 
-	formData := map[string][]string{
-		"username": []string{config.Username},
-		"password": []string{config.Password},
-		"scope":    []string{"purge_all"},
-		"name":     []string{"plugin_test"},
+	scope := data.Get("scope").(string)
+	serviceIDs := strings.Split(data.Get("service_id").(string), ",")
 
-		// The Go url package doesn't add [] automatically when encoding arrays
-		// This works, but looks hacky
-		"services[]": []string{"Xj6ZldKCnW2gmTix97F1U", "23MQEr22Ux4U7rW4IRZUXz"}, // Sandbox services
+	formData := map[string][]string{
+		"username":   []string{config.Username},
+		"password":   []string{config.Password},
+		"scope":      []string{scope},
+		"name":       []string{"vault-fastly-secret-engine"},
+		"services[]": serviceIDs,
 	}
+
 	totp, err := generateTOTPCode(config.SharedSecret)
 	if err != nil {
 		return &logical.Response{
