@@ -31,3 +31,10 @@ pipeline:
     when:
       branch: master
       event: push
+  
+  deploy:
+    image: plugins/gcs
+    source: vault-fastly-secret-engine
+    target: vault-fastly-secret-engine/vault-fastly-secret-engine
+    acl: allUsers:READER
+    secrets: [google_credentials]
