@@ -8,6 +8,7 @@ pipeline:
       - GOARCH=amd64
       - CGO_ENABLED=0
     commands:
+      - go get
       - cd plugin/
       - go test
     when:
