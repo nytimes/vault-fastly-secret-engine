@@ -1,4 +1,8 @@
 ---
+workspace:
+  base: /go
+  path: src/github.com/nytm/vault-fastly-secret-engine
+
 pipeline:
 
   test:
