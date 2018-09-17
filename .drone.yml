@@ -1,0 +1,27 @@
+---
+pipeline:
+
+  test:
+    image: golang:1.9-alpine
+    environment:
+      - GOOS=linux
+      - GOARCH=amd64
+      - CGO_ENABLED=0
+    commands:
+      - cd plugin/
+      - go test
+    when:
+      branch: master
+      event: push
+
+  build:
+    image: golang:1.9-alpine
+    environment:
+      - GOOS=linux
+      - GOARCH=amd64
+      - CGO_ENABLED=0
+    commands:
+      - go build
+    when:
+      branch: master
+      event: push
