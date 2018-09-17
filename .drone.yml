@@ -8,6 +8,7 @@ pipeline:
       - GOARCH=amd64
       - CGO_ENABLED=0
     commands:
+      - apk add --no-cache bash curl git make unzip
       - go get
       - cd plugin/
       - go test
