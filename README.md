@@ -12,7 +12,7 @@ management tool.
 
     ```text
     $ SHASUM=$(shasum -a 256 vault-fastly-secret-engine | cut -d " " -f1)
-    $ vault write sys/plugins/catalog/vault-fastly-secret-engine   sha_256="$SHASUM" 
+    $ vault write sys/plugins/catalog/vault-fastly-secret-engine sha_256="$SHASUM" command="vault-fastly-secret-engine" 
     Success! Data written to: sys/plugins/catalog/vault-fastly-secret-engine
     ```
 
