@@ -153,16 +153,3 @@ func validateAndPreprocessInputParams(data *framework.FieldData) (map[string][]s
 
 	return validatedData, err
 }
-
-func ensureExpirationInParams(formData map[string][]string) map[string][]string {
-	// This adds expiration to create token POST form if one doesn't exist
-	// Default TTL 5 minutes for now
-	defaultExpiration := time.Now().Add(5 * time.Minute).UTC().Format("2006-01-02T15:04:05+00:00")
-
-	field := formData["ttl"]
-	if field == nil || len(field) == 0 {
-		formData["expires_at"] = []string{defaultExpiration}
-	}
-
-	return formData
-}
