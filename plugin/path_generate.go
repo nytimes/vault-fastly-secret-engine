@@ -143,7 +143,7 @@ func validateAndPreprocessInputParams(data *framework.FieldData) (map[string][]s
 		return nil, fmt.Errorf("Invalid ttl value %s", originTTLString)
 	}
 
-	expiresAt := time.Now().Add(time.Duration(ttl) * time.Minute).UTC().Format("2006-01-02T15:04:05+00:00")
+	expiresAt := time.Now().Add(time.Duration(ttl) * time.Second).UTC().Format("2006-01-02T15:04:05+00:00")
 
 	validatedData := map[string][]string{
 		"scope":      []string{scope},
