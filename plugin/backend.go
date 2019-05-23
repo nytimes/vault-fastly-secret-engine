@@ -96,12 +96,17 @@ Generate and return a Fastly token
 				Fields: map[string]*framework.FieldSchema{
 					"scope": &framework.FieldSchema{
 						Type:        framework.TypeString,
-						Description: "Number of characters for the password.",
+						Description: "The scope for the token.",
+						Default:     "",
+					},
+					"ttl": &framework.FieldSchema{
+						Type:        framework.TypeString,
+						Description: "The ttl for the token to be valid.",
 						Default:     "",
 					},
 					"service_id": &framework.FieldSchema{
 						Type:        framework.TypeString,
-						Description: "Number of digits for the password.",
+						Description: "The id of the service that the token is created for.",
 						Default:     "",
 					},
 				},
