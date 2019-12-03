@@ -1,6 +1,6 @@
 # vault-fastly-secret-engine
 
-This plugin will allow you to create a secret backend that will use the Faslty API to generate dynamic short lived Fastly token.  Usage can be restricted using the highly customizable Vault ACL system.
+This plugin will allow you to create a secret backend that will use the Fastly API to generate dynamic short lived Fastly token.  Usage can be restricted using the highly customizable Vault ACL system.
 
 ### Setup
 
@@ -26,11 +26,11 @@ management tool.
     By default, the secrets engine will mount at the name of the engine. To
     enable the secrets engine at a different path, use the `-path` argument.
 
-1. Configure a the backend with user credentials that will be able to interact with the Fastly API and create tokens.
+1. Configure the backend with user credentials that will be able to interact with the Fastly API and create tokens.
 
     ```text
     $ vault write fastly/config username="sam" password="test" sharedSecret="123"
-    Success! Data written to: fastly/config67
+    Success! Data written to: fastly/config
     ```
 
     The `sharedSecret` corresponds to the shared secret key produced by fastly when configuring MFA login.  This will be used to generate the Fastly tokens.
