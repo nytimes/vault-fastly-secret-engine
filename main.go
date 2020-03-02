@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/vault/helper/pluginutil"
 	"github.com/hashicorp/vault/logical/plugin"
-	"github.com/nytm/vault-fastly-secret-engine/plugin"
+	fastly "github.com/nytimes/vault-fastly-secret-engine/plugin"
 )
 
 func main() {
