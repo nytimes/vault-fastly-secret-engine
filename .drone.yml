@@ -1,40 +1,62 @@
 ---
 workspace:
   base: /go
-  path: src/github.com/nytm/vault-fastly-secret-engine
+  path: src/github.com/nytimes/vault-fastly-secret-engine
 
 pipeline:
+  mod-download:
+    image: golang:1
+    commands:
+      - go version
+      - go mod download
+    when:
+      event: [push, tag]
 
   test:
-    image: golang:1.9-alpine
+    image: golang:1
     environment:
       - GOOS=linux
       - GOARCH=amd64
       - CGO_ENABLED=0
     commands:
-      - apk add --no-cache bash curl git make unzip
-      - go get
-      - cd plugin/
-      - go test
+      - go test ./...
     when:
-      branch: master
       event: push
 
   build:
-    image: golang:1.9-alpine
+    image: golang:1
     environment:
       - GOOS=linux
       - GOARCH=amd64
       - CGO_ENABLED=0
     commands:
-      - go build
+      - mkdir upload
+      - make build
+      - mv vault-fastly-secret-engine upload/
+      - shasum -a 256 upload/vault-fastly-secret-engine | cut -d " " -f1 > upload/SHA256SUMS.txt
+      - cat upload/SHA256SUMS.txt
+    when:
+      branch: master
+      event: [push, tag]
+
+  publish:
+    image: plugins/gcs
+    source: upload/
+    target: vault-fastly-secret-engine/latest/
+    acl: allUsers:READER
+    # nytimes/vault-datadog-secret-engine/secret/drone-google-credential
+    secrets: [google_credentials]
     when:
       branch: master
       event: push
-  
-  deploy:
+
+  publish-release:
     image: plugins/gcs
-    source: vault-fastly-secret-engine
-    target: vault-fastly-secret-engine/vault-fastly-secret-engine
+    source: upload/
+    target: "vault-fastly-secret-engine/${DRONE_TAG}/"
     acl: allUsers:READER
+    # nytimes/vault-datadog-secret-engine/secret/drone-google-credential
     secrets: [google_credentials]
+    when:
+      branch: master
+      event: tag
