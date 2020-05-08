@@ -30,12 +30,17 @@ type FastlyToken struct {
 }
 
 func (b *backend) pathGenerate(ctx context.Context, req *logical.Request, data *framework.FieldData) (*logical.Response, error) {
-
 	config, err := b.config(ctx, req.Storage)
+	if err != nil {
+		return &logical.Response{
+			Data: map[string]interface{}{
+				"error": err.Error(),
+			},
+		}, nil
+	}
 
 	// Validate the data passed in the field and preprocess them so they can be used directly for generating tokens
 	validatedData, err := validateAndPreprocessInputParams(data)
-
 	if err != nil {
 		return &logical.Response{
 			Data: map[string]interface{}{
