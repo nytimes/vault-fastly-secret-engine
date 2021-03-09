@@ -50,7 +50,7 @@ scope of the desired token as well as the service ID:
     token    d118a65cdfe314202cf969e1fb2e8afc
     ```
 
-    *NOTE* you can provide multiple servie IDs by using a comma delimited string.
+    *NOTE* you can provide multiple service IDs by using a comma delimited string.
 
     ```text
     $ vault write fastly/generate scope="global" service_id="Xj62345gmTix9gh67U,45MDE6457BT4IRZdf7z"
