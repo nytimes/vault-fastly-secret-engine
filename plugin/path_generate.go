@@ -153,7 +153,7 @@ func validateAndPreprocessInputParams(data *framework.FieldData) (map[string][]s
 
 	validatedData := map[string][]string{
 		"scope":      []string{scope},
-		"services[]": serviceIDs,
+		"serviceIDs": serviceIDs,
 		"expires_at": []string{expiresAt},
 	}
 
