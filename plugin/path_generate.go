@@ -138,7 +138,7 @@ func validateAndPreprocessInputParams(data *framework.FieldData) (map[string][]s
 	serviceIDs := strings.Split(data.Get("service_id").(string), ",")
 
 	originTTLString := data.Get("ttl").(string)
-	
+
 	// The default ttl for tokens is 5min(300s)
 	if len(originTTLString) == 0 {
 		originTTLString = "300"
