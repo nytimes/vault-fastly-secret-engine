@@ -6,8 +6,6 @@ require (
 	github.com/SermoDigital/jose v0.9.2-0.20180104203859-803625baeddc // indirect
 	github.com/armon/go-radix v0.0.0-20170727155443-1fca145dffbc // indirect
 	github.com/boombuler/barcode v1.0.0 // indirect
-	github.com/golang/protobuf v1.1.1-0.20180710193413-0cb4f7325693 // indirect
-	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
 	github.com/hashicorp/errwrap v0.0.0-20141028054710-7554cd9344ce // indirect
 	github.com/hashicorp/go-cleanhttp v0.0.0-20171218145408-d5fe4b57a186 // indirect
 	github.com/hashicorp/go-hclog v0.0.0-20180709165350-ff2cf002a8dd // indirect
@@ -19,7 +17,6 @@ require (
 	github.com/hashicorp/go-sockaddr v0.0.0-20180320115054-6d291a969b86 // indirect
 	github.com/hashicorp/go-uuid v0.0.0-20180228145832-27454136f036 // indirect
 	github.com/hashicorp/go-version v0.0.0-20180322230233-23480c066577 // indirect
-	github.com/hashicorp/golang-lru v0.0.0-20180201235237-0fb14efe8c47 // indirect
 	github.com/hashicorp/hcl v0.0.0-20180404174102-ef8a98b0bbce // indirect
 	github.com/hashicorp/vault v0.10.4
 	github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb // indirect
@@ -27,13 +24,8 @@ require (
 	github.com/mitchellh/go-testing-interface v0.0.0-20171004221916-a61a99592b77 // indirect
 	github.com/mitchellh/mapstructure v0.0.0-20180511142126-bb74f1db0675 // indirect
 	github.com/oklog/run v1.0.0 // indirect
-	github.com/pkg/errors v0.8.0
+	github.com/pkg/errors v0.9.1
 	github.com/pquerna/otp v1.0.0
 	github.com/ryanuber/go-glob v0.0.0-20170128012129-256dc444b735 // indirect
-	golang.org/x/net v0.0.0-20180724234803-3673e40ba225 // indirect
-	golang.org/x/sys v0.0.0-20180709060233-1b2967e3c290 // indirect
-	golang.org/x/text v0.3.0 // indirect
-	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2 // indirect
-	google.golang.org/genproto v0.0.0-20180726180014-2a72893556e4 // indirect
-	google.golang.org/grpc v1.2.1-0.20180711182245-11b582728a13 // indirect
+	google.golang.org/grpc v1.53.0 // indirect
 )
