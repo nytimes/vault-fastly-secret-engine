@@ -31,7 +31,7 @@ require (
 	github.com/pquerna/otp v1.0.0
 	github.com/ryanuber/go-glob v0.0.0-20170128012129-256dc444b735 // indirect
 	golang.org/x/net v0.0.0-20180724234803-3673e40ba225 // indirect
-	golang.org/x/sys v0.0.0-20180709060233-1b2967e3c290 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	golang.org/x/text v0.3.0 // indirect
 	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2 // indirect
 	google.golang.org/genproto v0.0.0-20180726180014-2a72893556e4 // indirect
