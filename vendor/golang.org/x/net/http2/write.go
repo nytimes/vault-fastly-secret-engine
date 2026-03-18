@@ -13,6 +13,7 @@ import (
 
 	"golang.org/x/net/http/httpguts"
 	"golang.org/x/net/http2/hpack"
+	"golang.org/x/net/internal/httpcommon"
 )
 
 // writeFramer is implemented by any type that is used to write frames.
@@ -131,6 +132,16 @@ func (se StreamError) writeFrame(ctx writeContext) error {
 
 func (se StreamError) staysWithinBuffer(max int) bool { return frameHeaderLen+4 <= max }
 
+type writePing struct {
+	data [8]byte
+}
+
+func (w writePing) writeFrame(ctx writeContext) error {
+	return ctx.Framer().WritePing(false, w.data)
+}
+
+func (w writePing) staysWithinBuffer(max int) bool { return frameHeaderLen+len(w.data) <= max }
+
 type writePingAck struct{ pf *PingFrame }
 
 func (w writePingAck) writeFrame(ctx writeContext) error {
@@ -199,7 +210,7 @@ func (w *writeResHeaders) staysWithinBuffer(max int) bool {
 	// TODO: this is a common one. It'd be nice to return true
 	// here and get into the fast path if we could be clever and
 	// calculate the size fast enough, or at least a conservative
-	// uppper bound that usually fires. (Maybe if w.h and
+	// upper bound that usually fires. (Maybe if w.h and
 	// w.trailers are nil, so we don't need to enumerate it.)
 	// Otherwise I'm afraid that just calculating the length to
 	// answer this question would be slower than the ~2µs benefit.
@@ -329,7 +340,7 @@ func (wu writeWindowUpdate) writeFrame(ctx writeContext) error {
 }
 
 // encodeHeaders encodes an http.Header. If keys is not nil, then (k, h[k])
-// is encoded only only if k is in keys.
+// is encoded only if k is in keys.
 func encodeHeaders(enc *hpack.Encoder, h http.Header, keys []string) {
 	if keys == nil {
 		sorter := sorterPool.Get().(*sorter)
@@ -341,7 +352,12 @@ func encodeHeaders(enc *hpack.Encoder, h http.Header, keys []string) {
 	}
 	for _, k := range keys {
 		vv := h[k]
-		k = lowerHeader(k)
+		k, ascii := httpcommon.LowerHeader(k)
+		if !ascii {
+			// Skip writing invalid headers. Per RFC 7540, Section 8.1.2, header
+			// field names have to be ASCII characters (just as in HTTP/1.x).
+			continue
+		}
 		if !validWireHeaderFieldName(k) {
 			// Skip it as backup paranoia. Per
 			// golang.org/issue/14048, these should
